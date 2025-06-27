@@ -64,4 +64,3 @@ for ax, title, image in zip(axes, titles, images):
 
 plt.tight_layout()
 plt.savefig("region_growing_result.png")
-
