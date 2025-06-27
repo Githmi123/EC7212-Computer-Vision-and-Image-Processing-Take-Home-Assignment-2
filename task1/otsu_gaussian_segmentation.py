@@ -18,10 +18,20 @@ _, otsu_thresh = cv2.threshold(noisy_image, 0, 255, cv2.THRESH_BINARY + cv2.THRE
 
 # Display results
 plt.figure(figsize=(10,4))
-plt.subplot(1,3,1), plt.imshow(image, cmap='gray'), plt.title("Original")
-plt.subplot(1,3,2), plt.imshow(noisy_image, cmap='gray'), plt.title("Noisy Image")
-plt.subplot(1,3,3), plt.imshow(otsu_thresh, cmap='gray'), plt.title("Otsu Thresholding")
-plt.tight_layout()
+plt.subplot(1,3,1)
+plt.imshow(image, cmap='gray')
+plt.title("Original")
+plt.axis('off')
+
+plt.subplot(1,3,2)
+plt.imshow(noisy_image, cmap='gray')
+plt.title("Noisy Image")
+plt.axis('off')
+
+plt.subplot(1,3,3)
+plt.imshow(otsu_thresh, cmap='gray')
+plt.title("Otsu Thresholding")
+plt.axis('off')
 plt.savefig("otsu_result.png")
 
 
