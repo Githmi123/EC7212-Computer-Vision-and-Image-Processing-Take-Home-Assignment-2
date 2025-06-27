@@ -4,28 +4,36 @@ import matplotlib.pyplot as plt
 from collections import deque
 
 def region_growing(img, seeds, threshold=10):
-    visited = np.zeros_like(img, dtype=bool)
-    output = np.zeros_like(img, dtype=np.uint8)
-    h, w = img.shape
-    seed_value = img[seeds[0][1], seeds[0][0]]
+    height, width = img.shape
+    visited = np.zeros((height, width), dtype=bool)
+    output = np.zeros((height, width), dtype=np.uint8)
+
+    # Take intensity from the first seed
+    seed_x, seed_y = seeds[0]
+    seed_value = img[seed_y, seed_x]
     queue = deque(seeds)
+
+    directions = [(-1, -1), (-1, 0), (-1, 1),
+                  (0, -1),           (0, 1),
+                  (1, -1),  (1, 0),  (1, 1)]
 
     while queue:
         x, y = queue.popleft()
+
         if visited[y, x]:
             continue
 
-        current_value = img[y, x]
-        if abs(int(current_value) - int(seed_value)) <= threshold:
+        if abs(int(img[y, x]) - int(seed_value)) <= threshold:
             output[y, x] = 255
             visited[y, x] = True
-            for dx in [-1, 0, 1]:
-                for dy in [-1, 0, 1]:
-                    nx, ny = x + dx, y + dy
-                    if 0 <= nx < w and 0 <= ny < h and not visited[ny, nx]:
-                        queue.append((nx, ny))
+
+            for dx, dy in directions:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < width and 0 <= ny < height and not visited[ny, nx]:
+                    queue.append((nx, ny))
 
     return output
+
 
 # Create blank image
 img = np.zeros((200, 200), dtype=np.uint8)
